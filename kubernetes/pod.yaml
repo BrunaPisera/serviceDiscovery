@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  # Name that will be displayed
+  name: service-discovery-eureka
+spec:
+  ## Containers associated with the Pod
+  containers:
+    #Container name
+    - name: service-container
+      # The local the image is coming from
+      image: service-discovery-eureka:1
+      # Only pulls the image from repository if it is not present on machine
+      imagePullPolicy: IfNotPresent
+
+      ports:
+        # Bind service container Port to Pod port
+        - containerPort: 8080
