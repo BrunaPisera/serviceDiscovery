@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  # Name that will be displayed
+  name: service-discovery-eureka-01
+spec:
+  selector:
+    matchLabels:
+      app: service-discovery-eureka-01
+  ## Containers associated with the Pod
+  containers:
+    #Container name
+    - name: service-container
+      # The local the image is coming from
+      image: service-discovery-eureka:1
+      # Only pulls the image from repository if it is not present on machine
+      imagePullPolicy: IfNotPresent
+
+      ports:
+        # Bind service container Port to Pod port
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: airtime-credit-external-core-api-service
+  labels:
+    app: airtime-credit-external-core-api
+spec:
+  ports:
+    - protocol: TCP
+      name: external
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: airtime-credit-external-core-api
